@@ -28,7 +28,11 @@ public class GradController {
         if (grad != null) {
             fieldNaziv.setText(grad.getNaziv());
             fieldBrojStanovnika.setText(Integer.toString(grad.getBrojStanovnika()));
-            choiceDrzava.getSelectionModel().select(grad.getDrzava());
+            // choiceDrzava.getSelectionModel().select(grad.getDrzava());
+            // ovo ne radi jer grad.getDrzava() nije identički jednak objekat kao član listDrzave
+            for (Drzava drzava : listDrzave)
+                if (drzava.getId() == grad.getDrzava().getId())
+                    choiceDrzava.getSelectionModel().select(drzava);
         } else {
             choiceDrzava.getSelectionModel().selectFirst();
         }
