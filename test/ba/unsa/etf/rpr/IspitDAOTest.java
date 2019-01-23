@@ -133,6 +133,7 @@ public class IspitDAOTest {
             try {
                 PreparedStatement nadmorskaUpit = conn.prepareStatement("SELECT nadmorska_visina FROM grad WHERE id=1");
                 nadmorskaUpit.execute();
+                conn.close();
             } catch (SQLException e) {
                 fail("Tabela grad ne sadrži kolonu nadmorska_visina");
             }

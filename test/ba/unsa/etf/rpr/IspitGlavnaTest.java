@@ -90,6 +90,7 @@ public class IspitGlavnaTest {
         robot.lookup("#fieldNaziv").tryQuery().isPresent();
 
         robot.clickOn("#fieldNadmorskaVisina");
+        robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("250");
 
         // Klik na dugme Ok
