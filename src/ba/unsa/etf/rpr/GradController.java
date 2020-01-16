@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class GradController {
     public TextField fieldNaziv;
     public TextField fieldBrojStanovnika;
+    public TextField fieldNadmorskaVisina;
     public ChoiceBox<Drzava> choiceDrzava;
     public ObservableList<Drzava> listDrzave;
     private Grad grad;
@@ -21,6 +22,16 @@ public class GradController {
         this.grad = grad;
         listDrzave = FXCollections.observableArrayList(drzave);
     }
+    public boolean provjeriZaNadmorsku(String nadmorska){
+        int nadm= Integer.parseInt(nadmorska);
+//        for(char c : nadmorska.toCharArray()){
+//            if(!Character.isDigit(c)) return false;
+//        }
+
+
+        if(nadm<-400 || nadm>8000) return false;
+        return true;
+    }
 
     @FXML
     public void initialize() {
@@ -28,6 +39,7 @@ public class GradController {
         if (grad != null) {
             fieldNaziv.setText(grad.getNaziv());
             fieldBrojStanovnika.setText(Integer.toString(grad.getBrojStanovnika()));
+            fieldNadmorskaVisina.setText(Integer.toString(grad.getNadmorskaVisina()));
             // choiceDrzava.getSelectionModel().select(grad.getDrzava());
             // ovo ne radi jer grad.getDrzava() nije identički jednak objekat kao član listDrzave
             for (Drzava drzava : listDrzave)
@@ -75,13 +87,28 @@ public class GradController {
             fieldBrojStanovnika.getStyleClass().removeAll("poljeNijeIspravno");
             fieldBrojStanovnika.getStyleClass().add("poljeIspravno");
         }
-
+//        int nadmorska=8001;
+//        try {
+//            nadmorska = Integer.parseInt(fieldNadmorskaVisina.getText());
+//        } catch (NumberFormatException e) {
+//            // ...
+//        }
+        if(fieldNadmorskaVisina.getText().equals("")) fieldNadmorskaVisina.setText("0");
+        if (!provjeriZaNadmorsku(fieldNadmorskaVisina.getText())) {
+            fieldNadmorskaVisina.getStyleClass().removeAll("poljeIspravno");
+            fieldNadmorskaVisina.getStyleClass().add("poljeNijeIspravno");
+            sveOk = false;
+        } else {
+            fieldNadmorskaVisina.getStyleClass().removeAll("poljeNijeIspravno");
+            fieldNadmorskaVisina.getStyleClass().add("poljeIspravno");
+        }
         if (!sveOk) return;
 
         if (grad == null) grad = new Grad();
         grad.setNaziv(fieldNaziv.getText());
         grad.setBrojStanovnika(Integer.parseInt(fieldBrojStanovnika.getText()));
         grad.setDrzava(choiceDrzava.getValue());
+        grad.setNadmorskaVisina( Integer.parseInt(fieldNadmorskaVisina.getText()));
         Stage stage = (Stage) fieldNaziv.getScene().getWindow();
         stage.close();
     }

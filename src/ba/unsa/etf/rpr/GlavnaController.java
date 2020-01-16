@@ -24,9 +24,10 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 public class GlavnaController {
 
     public TableView<Grad> tableViewGradovi;
-    public TableColumn colGradId;
-    public TableColumn colGradNaziv;
-    public TableColumn colGradStanovnika;
+    public TableColumn<Grad, Integer> colGradId;
+    public TableColumn<Grad, String> colGradNaziv;
+    public TableColumn<Grad, Integer> colGradStanovnika;
+    public TableColumn<Grad, Integer> colGradNadmorska;
     public TableColumn<Grad,String> colGradDrzava;
     private GeografijaDAO dao;
     private ObservableList<Grad> listGradovi;
@@ -39,10 +40,12 @@ public class GlavnaController {
     @FXML
     public void initialize() {
         tableViewGradovi.setItems(listGradovi);
-        colGradId.setCellValueFactory(new PropertyValueFactory("id"));
-        colGradNaziv.setCellValueFactory(new PropertyValueFactory("naziv"));
-        colGradStanovnika.setCellValueFactory(new PropertyValueFactory("brojStanovnika"));
+        colGradId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colGradNaziv.setCellValueFactory(new PropertyValueFactory<>("naziv"));
+        colGradStanovnika.setCellValueFactory(new PropertyValueFactory<>("brojStanovnika"));
         colGradDrzava.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDrzava().getNaziv()));
+        colGradNadmorska.setCellValueFactory(new PropertyValueFactory<>("nadmorskaVisina"));
+
     }
 
     public void actionDodajGrad(ActionEvent actionEvent) {
